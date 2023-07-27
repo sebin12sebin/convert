@@ -1,0 +1,103 @@
+<!-- converter/templates/converter.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Video to Audio Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 20px;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input[type="file"] {
+            margin-bottom: 15px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: #ffffff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #audio_player {
+            margin-top: 20px;
+            width: 100%;
+        }
+
+        .result-text {
+            text-align: center;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+
+        .error-text {
+            color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <h1>Video to Audio Converter</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <!--<label for="conversion_type">Select Conversion Type:</label>
+        <select name="conversion_type" id="conversion_type">
+            {% for option in conversion_options %}
+                <option value="{{ option }}">{{ option|title }}</option>
+            {% endfor %}
+        </select> -->
+        <br>
+        <label for="video_file">Select Video File:</label>
+        <input type="file" name="video_file" id="video_file">
+        <br>
+        <label for="output_file">Output File Name:</label>
+        <input type="text" name="output_file" id="output_file">
+        <br>
+        <button type="submit">Convert</button>
+    </form>
+    {% if audio_file_path %}
+        <audio controls id="audio_player">
+            <source src="{{ audio_file_path }}" type="audio/mpeg">
+        </audio>
+    {% endif %}
+    {% if result_text %}
+        <div class="result-text {% if error %}error-text{% endif %}">
+            {{ result_text }}
+        </div>
+    {% endif %}
+</body>
+</html>
